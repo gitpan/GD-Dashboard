@@ -1,9 +1,9 @@
 package GD::Dashboard;
 
-#use strict;
+use strict;
 #use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 
 # Preloaded methods go here.
@@ -376,6 +376,8 @@ package GD::Dashboard::HorizontalBar;
 # Options:
 #   TRANSPARENT = [ r,g,b ]
 #   SPACING = N
+#   MIN
+#   MAX
 #
 sub new
 {
@@ -504,7 +506,7 @@ meter - Perl module to create JPEG graphics of meters and dials
 
    my $dash = new Dashboard();
 
-   my $g1 = new meter(FNAME=>base_path().'\icons\m1.jpg',
+   my $g1 = new GD::Dashboard::Gauge(
                       MIN=>0,
                       MAX=>$empcnt,
                       VAL=>$nopwp_cnt,
@@ -599,7 +601,7 @@ to a car speedometer or and airspeed indicator.
 Most gauge configuration is done in the constructor.  Here is a sample
 for the gauge included with this package (m1.jpg):
 
-   my $g1 = new meter(FNAME=>base_path().'\icons\m1.jpg',
+   my $g1 = new GD::Dashboard::Gauge(FNAME=>base_path().'\icons\m1.jpg',
                       MIN=>0,
                       MAX=>$empcnt,
                       VAL=>$nopwp_cnt,
@@ -700,6 +702,19 @@ bars, for example to have the last couple of bars be red instead of green.
 =head3 new()
 
 =over 4
+
+=item * 
+MIN = N
+The value representing zero bars illuminated.  Defaults to 0.
+
+=item *
+MAX = N
+The value representing all bars illuminated.  Defaults to 100.
+
+=item * 
+VAL = N
+The value to display.  Number of bars illuminated will be 
+val / (max-min) percent of total.
 
 =item *
    TRANSPARENT = [ r,g,b ]

@@ -3,4 +3,10 @@ Dashboard.pm
 Makefile.PL
 MANIFEST
 test.pl
-m1.jpg
+README
+examples/m1.jpg
+examples/ex1.pl
+examples/barlight_on.jpg
+examples/barlight_off.jpg
+examples/m2.jpg
+examples/ex2.pl

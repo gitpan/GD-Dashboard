@@ -3,3 +3,6 @@ Revision history for Perl extension GD::Dashboard.
 0.01  Fri Nov 30 16:10:53 2001
 	- original version; created by h2xs 1.19
       Not released until docs finished 1/9/02
+0.02  Sat Jan 12 1:47:00 2002
+        - Updated documentation
+        - Added some example scripts (examples/ex?.pl)
