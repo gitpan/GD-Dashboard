@@ -3,7 +3,7 @@ package GD::Dashboard;
 use strict;
 #use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 
-$VERSION = '0.02';
+$GD::Dashboard::VERSION = '0.03';
 
 
 # Preloaded methods go here.
@@ -68,7 +68,14 @@ sub jpeg
 {
    my ($self) = @_;
    my ($aref) = $self->{METERS};
-
+   my $fname = $self->{FNAME};
+   
+   if (!defined($fname) || $fname eq '')
+   {
+      warn("GD::Dashboard::jpeg(): You must set FNAME in constructor first!") ;
+      return undef;
+   }
+   
    # Get canvas from specified background graphics   
    my $im = GD::Image->newFromJpeg($self->{FNAME});
 
@@ -500,11 +507,11 @@ __END__
 
 =head1 NAME
 
-meter - Perl module to create JPEG graphics of meters and dials
+GD::Dashboard - Perl module to create JPEG graphics of meters and dials
 
 =head1 SYNOPSIS
 
-   my $dash = new Dashboard();
+   my $dash = new GD::Dashboard();
 
    my $g1 = new GD::Dashboard::Gauge(
                       MIN=>0,

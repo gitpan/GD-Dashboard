@@ -18,3 +18,15 @@ print "ok 1\n";
 # (correspondingly "not ok 13") depending on the success of chunk 13
 # of the test code):
 
+# 2: Test when FNAME not specified.
+my $d1 = new GD::Dashboard();
+my $jpeg = $d1->jpeg;
+
+if (defined($jpeg))
+{
+   print "not ok 2\n";
+}
+else
+{
+   print "ok 2\n";
+}
