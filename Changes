@@ -11,3 +11,6 @@ Revision history for Perl extension GD::Dashboard.
         - Fixed version bug that appeared when I added use strict
         - Added some warnings
         - Added test cases
+0.04  Thu Jan 24 00:25:00 2002
+        - Added PNG support
+        - More test cases

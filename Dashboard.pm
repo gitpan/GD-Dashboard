@@ -3,7 +3,7 @@ package GD::Dashboard;
 use strict;
 #use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 
-$GD::Dashboard::VERSION = '0.03';
+$GD::Dashboard::VERSION = '0.04';
 
 
 # Preloaded methods go here.
@@ -64,7 +64,7 @@ sub get_meter
    $self->{METERS}->{$name};
 }
 
-sub jpeg
+sub gdimage
 {
    my ($self) = @_;
    my ($aref) = $self->{METERS};
@@ -72,19 +72,46 @@ sub jpeg
    
    if (!defined($fname) || $fname eq '')
    {
-      warn("GD::Dashboard::jpeg(): You must set FNAME in constructor first!") ;
+      warn("GD::Dashboard::gdimage(): You must set FNAME in constructor first!") ;
       return undef;
    }
    
    # Get canvas from specified background graphics   
-   my $im = GD::Image->newFromJpeg($self->{FNAME});
-
+   my $im;
+   
+   if ($self->{FNAME} =~ /png$/ )
+   {
+      $im = GD::Image->newFromPng($self->{FNAME});
+   }
+   else
+   {
+      $im = GD::Image->newFromJpeg($self->{FNAME});
+   }
+   
    # Draw all my meters
    for my $m (keys(%{$aref}))
    {
       my $m2 = $aref->{$m};
       $m2->write_gdimagehandle($im);
    }
+
+   $im;
+}
+
+sub png
+{
+   my ($self) = @_;
+
+   my $im = $self->gdimage;
+
+   return $im->png();
+}
+
+sub jpeg
+{
+   my ($self) = @_;
+
+   my $im = $self->gdimage;
 
    return $im->jpeg($self->{QUALITY});
 }
@@ -99,6 +126,16 @@ sub write_jpeg
    open (HG1,'>'.$fname);
    binmode HG1;
    print HG1 $self->jpeg();
+   close HG1;
+}
+
+sub write_png
+{
+   my ($self,$fname) = @_;
+   
+   open (HG1,'>'.$fname);
+   binmode HG1;
+   print HG1 $self->png();
    close HG1;
 }
 
@@ -595,6 +632,13 @@ Returns a JPG as a scalar value.
 
 Draws the dashboard to a jpg file given by fname.
 
+=head3 png()
+
+Returns a PNG as a scalar value.
+
+=head3 write_png(fname)
+
+Draws the dashboard to a PNG file given by fname.
 
 =head2 Dashboard::Gauge
 
